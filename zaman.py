@@ -100,8 +100,16 @@ for stat in collocation_stats_sorted:
     print(f"Word: {stat[0]} ({stat[1]}), Frequency: {stat[2]}, MI: {stat[3]:.4f}, Log-Likelihood: {stat[4]:.4f}")
 
 # Step 10: Export the output to a .csv file
-with open('zaman_collocations_large.csv', mode='w', newline='', encoding='utf-8') as file:
+with open('zaman_collocations.csv', mode='w', newline='', encoding='utf-8') as file:
     writer = csv.writer(file)
     writer.writerow(['Word', 'Position', 'Frequency', 'MI', 'Log-Likelihood'])
+
+    # Ensure MI and Log-Likelihood values are saved as strings with correct decimal formatting
     for stat in collocation_stats_sorted:
-        writer.writerow([stat[0], stat[1], stat[2], f"{stat[3]:.4f}", f"{stat[4]:.4f}"])
+        writer.writerow([
+            stat[0],  # Word
+            stat[1],  # Position (left or right)
+            stat[2],  # Frequency
+            f"{stat[3]:.4f}",  # MI (formatted to 4 decimal places)
+            f"{stat[4]:.4f}"  # Log-Likelihood (formatted to 4 decimal places)
+        ])
