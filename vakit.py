@@ -110,6 +110,7 @@ with open('vakit_collocations.csv', mode='w', newline='', encoding='utf-8') as f
             f"{stat[4]:.4f}"  # Log-Likelihood (formatted to 4 decimal places)
         ])
 
+## Observed (raw) frequency of vakit* and vakit in the corpus
 
 # Define a function to match any form of 'vakit' using regex
 def is_vakit_form(word):
@@ -128,3 +129,14 @@ normalized_vakit_count = (vakit_count / total_tokens) * 1000000
 # Print the results
 print(f"Observed (Raw) Frequency of 'vakit*': {vakit_count}")
 print(f"Normalized Frequency of 'vakit*' (per million words): {normalized_vakit_count:.2f}")
+
+# Calculate the observed (raw) frequency of 'vakit' as a headword (without affixes)
+vakit_headword_count = tokens.count('vakit')  # Count only the exact word 'vakit'
+
+# Calculate normalized frequency (per million tokens) for 'vakit' as a headword
+# Normalized frequency formula: (raw frequency / total tokens) * 1,000,000
+normalized_vakit_headword_count = (vakit_headword_count / total_tokens) * 1000000
+
+# Print the observed and normalized frequency results for 'zaman' as a headword
+print(f"Observed (Raw) Frequency of 'vakit' (headword): {vakit_headword_count}")
+print(f"Normalized Frequency of 'vakit' (headword, per million words): {normalized_vakit_headword_count:.2f}")

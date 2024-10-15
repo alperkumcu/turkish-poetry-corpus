@@ -110,6 +110,7 @@ with open('zaman_collocations.csv', mode='w', newline='', encoding='utf-8') as f
             f"{stat[4]:.4f}"  # Log-Likelihood (formatted to 4 decimal places)
         ])
 
+## Observed (raw) frequency of vakit* and vakit in the corpus
 
 # Define a function to match any form of 'zaman' using regex
 def is_zaman_form(word):
@@ -128,3 +129,14 @@ normalized_zaman_count = (zaman_count / total_tokens) * 1000000
 # Print the results
 print(f"Observed (Raw) Frequency of 'zaman*': {zaman_count}")
 print(f"Normalized Frequency of 'zaman*' (per million words): {normalized_zaman_count:.2f}")
+
+# Calculate the observed (raw) frequency of 'zaman' as a headword (without affixes)
+zaman_headword_count = tokens.count('zaman')  # Count only the exact word 'zaman'
+
+# Calculate normalized frequency (per million tokens) for 'zaman' as a headword
+# Normalized frequency formula: (raw frequency / total tokens) * 1,000,000
+normalized_zaman_headword_count = (zaman_headword_count / total_tokens) * 1000000
+
+# Print the observed and normalized frequency results for 'zaman' as a headword
+print(f"Observed (Raw) Frequency of 'zaman' (headword): {zaman_headword_count}")
+print(f"Normalized Frequency of 'zaman' (headword, per million words): {normalized_zaman_headword_count:.2f}")
