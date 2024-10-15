@@ -1,7 +1,3 @@
-import nltk
-# Download required NLTK data (run this once if not already done)
-nltk.download('punkt')
-
 import json
 from nltk.tokenize import word_tokenize
 from math import log
@@ -89,7 +85,7 @@ for word, count in collocations_right.items():
     if is_valid_word(word):  # Ensure the collocation is a valid word
         mi_score = calculate_mi('vakit', count, word_freq, total_tokens, word_freq[word])
         log_likelihood = calculate_log_likelihood('vakit', count, word_freq, total_tokens, word_freq[word])
-        collocation_stats.append((word, 'vakit', count, mi_score, log_likelihood))
+        collocation_stats.append((word, 'right', count, mi_score, log_likelihood))
 
 # Step 8: Sort the collocations by Log-Likelihood in descending order
 collocation_stats_sorted = sorted(collocation_stats, key=lambda item: item[4], reverse=True)
@@ -113,3 +109,22 @@ with open('vakit_collocations.csv', mode='w', newline='', encoding='utf-8') as f
             f"{stat[3]:.4f}",  # MI (formatted to 4 decimal places)
             f"{stat[4]:.4f}"  # Log-Likelihood (formatted to 4 decimal places)
         ])
+
+
+# Define a function to match any form of 'vakit' using regex
+def is_vakit_form(word):
+    return bool(re.match(r'^vakit.*', word))
+
+# Calculate observed (raw) frequency for 'zaman' and its affixed forms
+vakit_count = sum(1 for word in tokens if is_vakit_form(word))
+
+# Calculate the total number of tokens in the corpus (excluding punctuation)
+total_tokens = len([word for word in tokens if is_valid_word(word)])  # Exclude punctuation
+
+# Calculate normalized frequency (per million tokens)
+# Normalized frequency formula: (raw frequency / total tokens) * 1,000,000
+normalized_vakit_count = (vakit_count / total_tokens) * 1000000
+
+# Print the results
+print(f"Observed (Raw) Frequency of 'vakit*': {vakit_count}")
+print(f"Normalized Frequency of 'vakit*' (per million words): {normalized_vakit_count:.2f}")

@@ -1,7 +1,3 @@
-import nltk
-# Download required NLTK data (run this once if not already done)
-nltk.download('punkt')
-
 import json
 from nltk.tokenize import word_tokenize
 from math import log
@@ -113,3 +109,22 @@ with open('zaman_collocations.csv', mode='w', newline='', encoding='utf-8') as f
             f"{stat[3]:.4f}",  # MI (formatted to 4 decimal places)
             f"{stat[4]:.4f}"  # Log-Likelihood (formatted to 4 decimal places)
         ])
+
+
+# Define a function to match any form of 'zaman' using regex
+def is_zaman_form(word):
+    return bool(re.match(r'^zaman.*', word))
+
+# Calculate observed (raw) frequency for 'zaman' and its affixed forms
+zaman_count = sum(1 for word in tokens if is_zaman_form(word))
+
+# Calculate the total number of tokens in the corpus (excluding punctuation)
+total_tokens = len([word for word in tokens if is_valid_word(word)])  # Exclude punctuation
+
+# Calculate normalized frequency (per million tokens)
+# Normalized frequency formula: (raw frequency / total tokens) * 1,000,000
+normalized_zaman_count = (zaman_count / total_tokens) * 1000000
+
+# Print the results
+print(f"Observed (Raw) Frequency of 'zaman*': {zaman_count}")
+print(f"Normalized Frequency of 'zaman*' (per million words): {normalized_zaman_count:.2f}")
