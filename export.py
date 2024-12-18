@@ -9,7 +9,7 @@ with open('train.json', 'r', encoding='utf-8') as file:
 # Step 2: Create the Turkish Poetry Corpus as a single text string
 corpus_text = ' '.join([entry["poem"].replace('\n', ' ') for entry in data])
 
-# Step 3: Tokenize the text into individual words (optional, just to validate tokens)
+# Step 3: Tokenize the text into individual words
 tokens = word_tokenize(corpus_text.lower())  # Tokenize and convert to lowercase
 print(f"Number of tokens in the corpus: {len(tokens)}")
 
@@ -36,3 +36,10 @@ with open('Turkish_Poetry_Corpus.xml', 'w', encoding='utf-8') as file:
     file.write('</Corpus>')
 print("Corpus has been exported as 'Turkish_Poetry_Corpus.xml'.")
 
+# Step 7: Export the tokenized words into a .csv file (one word per cell)
+with open('Turkish_Poetry_Corpus_Tokenized.csv', 'w', newline='', encoding='utf-8') as csvfile:
+    writer = csv.writer(csvfile)
+    writer.writerow(['Token'])  # Header for tokenized words
+    for token in tokens:
+        writer.writerow([token])  # Write each token as a single row
+print("Tokenized words have been exported as 'Turkish_Poetry_Corpus_Tokenized.csv'.")
